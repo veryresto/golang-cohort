@@ -1,0 +1,28 @@
+# install mysql for go
+go install -tags 'mysql' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
+
+# command create migration
+migrate create -ext sql -dir database/migrations create_admins_table
+
+# table create_admins_table
+Create TABLE admins (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `name` VARCHAR(255) NOT NULL,
+    `email` VARCHAR(255) NOT NULL,
+    `password` VARCHAR(255) NOT NULL,
+    `created_by` INT NULL,
+    `updated_by` INT NULL,
+    `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` TIMESTAMP NULL,
+    `deleted_at` TIMESTAMP NULL,
+    PRIMARY_KEY(`id`),
+    UNIQUE KEY admins_email_unique(`email`),
+    INDEX idx_admins_email(`email`),
+    INDEX idx_admins_created_by(`created_by`),
+    INDEX idx_admins_updated_by(`updated_by`),
+    FK_admins_created_by FOREIGN KEY ('created_by) REFERENCES admins(`id`) ON DELETE SET NULL,
+    FK_admins_updated_by FOREIGN KEY ('updated_by) REFERENCES admins(`id`) ON DELETE SET NULL,
+) ENGINE = INNODB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;
+
+mysql root password
+9j.+BB46.&Mf&dV2ASo#2Gf9d&f7_7vV
