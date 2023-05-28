@@ -40,3 +40,9 @@ go to https://gorm.io/docs
 
 go get -u gorm.io/gorm
 go get -u gorm.io/driver/mysql
+
+# add gitignore
+https://www.toptal.com/developers/gitignore
+
+# dotenv in go
+https://github.com/joho/godotenv
