@@ -32,4 +32,4 @@ migrate create -ext sql -dir database/migrations create_admins_table
 9j.+BB46.&Mf&dV2ASo#2Gf9d&
 
 # connect mysql
-migrate -database "mysql://root:9j.+BB46.&Mf&dV2ASo#2Gf9d&@tcp(localhost:3306)/golang" -path database/migrations up
+migrate -database "mysql://root:admin123@tcp(localhost:3306)/golang" -path database/migrations up
