@@ -33,3 +33,10 @@ migrate create -ext sql -dir database/migrations create_admins_table
 
 # connect mysql
 migrate -database "mysql://root:admin123@tcp(localhost:3306)/golang" -path database/migrations up
+
+
+# gorm
+go to https://gorm.io/docs
+
+go get -u gorm.io/gorm
+go get -u gorm.io/driver/mysql
