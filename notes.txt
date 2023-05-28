@@ -1,3 +1,27 @@
+# using linux ubuntu 22.04 for development
+# install go
+wget https://go.dev/dl/go1.20.4.linux-amd64.tar.gz
+
+# extract and also ensuring no existing go installation
+rm -rf /usr/local/go && tar -C /usr/local -xzf go1.20.4.linux-amd64.tar.gz
+
+# execute export command & add it to ~/.profile
+export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:/root/go/bin
+
+# after installing go, init the module
+go mod init <module_name>
+go mod init course.veryresto.com
+
+# getting gin
+go get -u github.com/gin-gonic/gin
+
+# hot reload
+go install github.com/cosmtrek/air@latest
+
+## hot reload first setup
+air init
+
 # install mysql for go
 go install -tags 'mysql' github.com/golang-migrate/migrate/v4/cmd/migrate@latest
 
