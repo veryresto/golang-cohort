@@ -3,10 +3,11 @@ package oauth
 import (
 	"net/http"
 
+	dto "online-course/internal/oauth/dto"
+	usecase "online-course/internal/oauth/usecase"
+	response "online-course/pkg/response"
+
 	"github.com/gin-gonic/gin"
-	dto "online-course.faerul.com/internal/oauth/dto"
-	usecase "online-course.faerul.com/internal/oauth/usecase"
-	response "online-course.faerul.com/pkg/response"
 )
 
 type OauthHandler struct {

@@ -1,9 +1,10 @@
 package oauth
 
 import (
+	entity "online-course/internal/oauth/entity"
+	response "online-course/pkg/response"
+
 	"gorm.io/gorm"
-	entity "online-course.faerul.com/internal/oauth/entity"
-	response "online-course.faerul.com/pkg/response"
 )
 
 type OauthAccessTokenRepository interface {

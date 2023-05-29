@@ -46,3 +46,6 @@ https://www.toptal.com/developers/gitignore
 
 # dotenv in go
 https://github.com/joho/godotenv
+
+# golang jwt
+go get github.com/golang-jwt/jwt/v5

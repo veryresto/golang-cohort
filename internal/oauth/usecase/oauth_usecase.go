@@ -5,14 +5,15 @@ import (
 	"os"
 	"time"
 
+	dto "online-course/internal/oauth/dto"
+	entity "online-course/internal/oauth/entity"
+	repository "online-course/internal/oauth/repository"
+	userUsecase "online-course/internal/user/usecase"
+	response "online-course/pkg/response"
+	"online-course/pkg/utils"
+
 	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
-	dto "online-course.faerul.com/internal/oauth/dto"
-	entity "online-course.faerul.com/internal/oauth/entity"
-	repository "online-course.faerul.com/internal/oauth/repository"
-	userUsecase "online-course.faerul.com/internal/user/usecase"
-	response "online-course.faerul.com/pkg/response"
-	"online-course.faerul.com/pkg/utils"
 )
 
 type OauthUsecase interface {
