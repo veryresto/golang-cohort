@@ -3,10 +3,11 @@ package register
 import (
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	registerUseCase "online-course/internal/register/usecase"
 	userDto "online-course/internal/user/dto"
 	response "online-course/pkg/response"
+
+	"github.com/gin-gonic/gin"
 )
 
 type RegisterHandler struct {
