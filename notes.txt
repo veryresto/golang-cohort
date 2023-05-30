@@ -63,3 +63,7 @@ go get github.com/sendgrid/sendgrid-go
 # google wire
 go install github.com/google/wire/cmd/wire@latest
 wire gen internal/register/injector/wire.go
+
+# some logs
+https://github.com/GeorgeMac/logrush
+https://github.com/sirupsen/logrus
