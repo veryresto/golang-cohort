@@ -49,3 +49,17 @@ https://github.com/joho/godotenv
 
 # golang jwt
 go get github.com/golang-jwt/jwt/v5
+
+# insert to oauth_clients
+INSERT INTO golang.oauth_clients
+(client_id, client_secret, name, redirect, description, `scope`, created_by, updated_by, created_at, updated_at, deleted_at)
+VALUES('1', '1', 'web', '', '', '', null, null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, null);
+
+
+# sendgrid go
+https://github.com/sendgrid/sendgrid-go#install-package
+go get github.com/sendgrid/sendgrid-go
+
+# google wire
+go install github.com/google/wire/cmd/wire@latest
+wire gen internal/register/injector/wire.go
