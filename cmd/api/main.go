@@ -1,21 +1,14 @@
 package main
 
 import (
-	userRepository "online-course/internal/user/repository"
-	userUsecase "online-course/internal/user/usecase"
-	mysql "online-course/pkg/db/mysql"
-
 	"github.com/gin-gonic/gin"
 
-	registerHandler "online-course/internal/register/delivery/http"
-	registerUsecase "online-course/internal/register/usecase"
+	mysql "online-course/pkg/db/mysql"
 
-	oauthAccessTokenRepository "online-course/internal/oauth/repository"
-	oauthClientRepository "online-course/internal/oauth/repository"
-	oauthRefreshTokenRepository "online-course/internal/oauth/repository"
-
-	oauthHandler "online-course/internal/oauth/delivery/http"
-	oauthUsecase "online-course/internal/oauth/usecase"
+	forgotPassword "online-course/internal/forgot_password/injector"
+	oauth "online-course/internal/oauth/injector"
+	register "online-course/internal/register/injector"
+	verificationEmail "online-course/internal/verification_email/injector"
 )
 
 func main() {
@@ -23,16 +16,10 @@ func main() {
 
 	db := mysql.DB()
 
-	userRepository := userRepository.NewUserRepository(db)
-	userUsecase := userUsecase.NewUserUseCase(userRepository)
-	registerUsecase := registerUsecase.NewRegisterUseCase(userUsecase)
-	registerHandler.NewRegisterHandler(registerUsecase).Route(&r.RouterGroup)
-
-	oauthClientRepository := oauthClientRepository.NewOauthClientRepository(db)
-	oauthAccessTokenRepository := oauthAccessTokenRepository.NewOauthAccessTokenRepository(db)
-	oauthRefreshTokenRepository := oauthRefreshTokenRepository.NewOauthRefreshTokenRepository(db)
-	oauthUsecase := oauthUsecase.NewOauthUsecase(oauthClientRepository, oauthAccessTokenRepository, oauthRefreshTokenRepository, userUsecase)
-	oauthHandler.NewOauthHandler(oauthUsecase).Route(&r.RouterGroup)
+	register.InitializedService(db).Route(&r.RouterGroup)
+	oauth.InitializedService(db).Route(&r.RouterGroup)
+	verificationEmail.InitializedService(db).Route(&r.RouterGroup)
+	forgotPassword.InitializedService(db).Route(&r.RouterGroup)
 
 	r.Run()
 }
