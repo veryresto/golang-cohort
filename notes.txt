@@ -67,3 +67,7 @@ wire gen internal/register/injector/wire.go
 # some logs
 https://github.com/GeorgeMac/logrush
 https://github.com/sirupsen/logrus
+
+# 30 mei
+- sudah crud admin & refresh token
+- perlu middleware karena crud admin tidak boleh sembarang diakses
