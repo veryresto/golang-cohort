@@ -10,7 +10,7 @@ import (
 type OauthRefreshTokenRepository interface {
 	Create(entity entity.OauthRefreshToken) (*entity.OauthRefreshToken, *response.Error)
 	FindOneByToken(token string) (*entity.OauthRefreshToken, *response.Error)
-	Delete(id int) *response.Error
+	Delete(entity entity.OauthRefreshToken) *response.Error
 }
 
 type oauthRefreshTokenRepository struct {
@@ -30,13 +30,29 @@ func (repository *oauthRefreshTokenRepository) Create(entity entity.OauthRefresh
 }
 
 // Delete implements OauthRefreshTokenRepository
-func (*oauthRefreshTokenRepository) Delete(id int) *response.Error {
-	panic("unimplemented")
+func (repository *oauthRefreshTokenRepository) Delete(entity entity.OauthRefreshToken) *response.Error {
+	if err := repository.db.Delete(&entity).Error; err != nil {
+		return &response.Error{
+			Code: 500,
+			Err:  err,
+		}
+	}
+
+	return nil
 }
 
 // FindOneByToken implements OauthRefreshTokenRepository
-func (*oauthRefreshTokenRepository) FindOneByToken(token string) (*entity.OauthRefreshToken, *response.Error) {
-	panic("unimplemented")
+func (repository *oauthRefreshTokenRepository) FindOneByToken(token string) (*entity.OauthRefreshToken, *response.Error) {
+	var oauthRefreshToken entity.OauthRefreshToken
+
+	if err := repository.db.Preload("OauthAccessToken").Where("token = ?", token).First(&oauthRefreshToken).Error; err != nil {
+		return nil, &response.Error{
+			Code: 500,
+			Err:  err,
+		}
+	}
+
+	return &oauthRefreshToken, nil
 }
 
 func NewOauthRefreshTokenRepository(db *gorm.DB) OauthRefreshTokenRepository {

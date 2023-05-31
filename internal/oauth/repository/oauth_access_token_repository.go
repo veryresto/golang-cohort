@@ -9,7 +9,7 @@ import (
 
 type OauthAccessTokenRepository interface {
 	Create(entity entity.OauthAccessToken) (*entity.OauthAccessToken, *response.Error)
-	Delete(id int) *response.Error
+	Delete(entity.OauthAccessToken) *response.Error
 }
 
 type oauthAccessTokenRepository struct {
@@ -29,10 +29,8 @@ func (repository *oauthAccessTokenRepository) Create(entity entity.OauthAccessTo
 }
 
 // Delete implements OauthAccessTokenRepository
-func (repository *oauthAccessTokenRepository) Delete(id int) *response.Error {
-	var oauthAccessToken entity.OauthAccessToken
-
-	if err := repository.db.Delete(&oauthAccessToken, id).Error; err != nil {
+func (repository *oauthAccessTokenRepository) Delete(entity entity.OauthAccessToken) *response.Error {
+	if err := repository.db.Delete(&entity).Error; err != nil {
 		return &response.Error{
 			Code: 500,
 			Err:  err,

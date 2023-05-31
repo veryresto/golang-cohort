@@ -6,6 +6,8 @@ package oauth
 import (
 	"github.com/google/wire"
 	"gorm.io/gorm"
+	adminRepository "online-course/internal/admin/repository"
+	adminUsecase "online-course/internal/admin/usecase"
 	handler "online-course/internal/oauth/delivery/http"
 	oauthAccessTokenRepository "online-course/internal/oauth/repository"
 	oauthClientRepository "online-course/internal/oauth/repository"
@@ -24,6 +26,8 @@ func InitializedService(db *gorm.DB) *handler.OauthHandler {
 		oauthRefreshTokenRepository.NewOauthRefreshTokenRepository,
 		handler.NewOauthHandler,
 		usecase.NewOauthUsecase,
+		adminRepository.NewAdminRepository,
+		adminUsecase.NewAdminUsecase,
 	)
 
 	return &handler.OauthHandler{}
