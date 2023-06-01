@@ -16,6 +16,9 @@ go mod init course.veryresto.com
 # getting gin
 go get -u github.com/gin-gonic/gin
 
+# running with built-in web server
+go run main.go
+
 # hot reload
 go install github.com/cosmtrek/air@latest
 
