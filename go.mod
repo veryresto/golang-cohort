@@ -1,4 +1,4 @@
-module online-course.faerul.com
+module online-course
 
 go 1.20
 
