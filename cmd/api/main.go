@@ -8,6 +8,7 @@ import (
 	admin "online-course/internal/admin/injector"
 	forgotPassword "online-course/internal/forgot_password/injector"
 	oauth "online-course/internal/oauth/injector"
+	productCategory "online-course/internal/product_category/injector"
 	register "online-course/internal/register/injector"
 	verificationEmail "online-course/internal/verification_email/injector"
 )
@@ -22,6 +23,7 @@ func main() {
 	verificationEmail.InitializedService(db).Route(&r.RouterGroup)
 	forgotPassword.InitializedService(db).Route(&r.RouterGroup)
 	admin.InitializedService(db).Route(&r.RouterGroup)
+	productCategory.InitializedService(db).Route(&r.RouterGroup)
 
 	r.Run()
 }

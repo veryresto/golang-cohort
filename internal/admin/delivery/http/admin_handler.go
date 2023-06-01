@@ -6,7 +6,9 @@ import (
 
 	dto "online-course/internal/admin/dto"
 	usecase "online-course/internal/admin/usecase"
+	"online-course/internal/middleware"
 	"online-course/pkg/response"
+	"online-course/pkg/utils"
 
 	"github.com/gin-gonic/gin"
 )
@@ -22,11 +24,14 @@ func NewAdminHandler(usecase usecase.AdminUsecase) *AdminHandler {
 func (handler *AdminHandler) Route(r *gin.RouterGroup) {
 	adminRouter := r.Group("/api/v1")
 
-	adminRouter.GET("/admins", handler.FindAll)
-	adminRouter.POST("/admins", handler.Create)
-	adminRouter.GET("/admins/:id", handler.FindById)
-	adminRouter.PATCH("/admins/:id", handler.Update)
-	adminRouter.DELETE("/admins/:id", handler.Delete)
+	adminRouter.Use(middleware.AuthJwt, middleware.AuthAdmin)
+	{
+		adminRouter.GET("/admins", handler.FindAll)
+		adminRouter.POST("/admins", handler.Create)
+		adminRouter.GET("/admins/:id", handler.FindById)
+		adminRouter.PATCH("/admins/:id", handler.Update)
+		adminRouter.DELETE("/admins/:id", handler.Delete)
+	}
 }
 
 func (handler *AdminHandler) Create(ctx *gin.Context) {
@@ -38,8 +43,13 @@ func (handler *AdminHandler) Create(ctx *gin.Context) {
 			http.StatusText(http.StatusBadRequest),
 			err.Error(),
 		))
+		ctx.Abort()
 		return
 	}
+
+	admin := utils.GetCurrentUser(ctx)
+
+	input.CreatedBy = &admin.ID
 
 	// Create data
 	_, err := handler.usecase.Create(input)
@@ -76,6 +86,10 @@ func (handler *AdminHandler) Update(ctx *gin.Context) {
 		ctx.Abort()
 		return
 	}
+
+	admin := utils.GetCurrentUser(ctx)
+
+	input.UpdatedBy = &admin.ID
 
 	// Update data
 	data, err := handler.usecase.Update(id, input)

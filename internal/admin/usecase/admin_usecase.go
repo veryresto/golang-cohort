@@ -34,9 +34,10 @@ func (usecase *adminUsecase) Create(dto dto.AdminRequestBody) (*entity.Admin, *r
 	}
 
 	dataAdmin := entity.Admin{
-		Email:    dto.Email,
-		Name:     dto.Name,
-		Password: string(hashedPassword),
+		Email:       dto.Email,
+		Name:        dto.Name,
+		CreatedByID: dto.CreatedBy,
+		Password:    string(hashedPassword),
 	}
 
 	admin, errCreateAdmin := usecase.repository.Create(dataAdmin)
@@ -89,6 +90,7 @@ func (usecase *adminUsecase) Update(id int, dto dto.AdminRequestBody) (*entity.A
 	}
 
 	admin.Name = dto.Name
+	admin.UpdatedByID = dto.UpdatedBy
 
 	// Validasi jika email dari admin tidak sama maka akan di update
 	if admin.Email != dto.Email {
