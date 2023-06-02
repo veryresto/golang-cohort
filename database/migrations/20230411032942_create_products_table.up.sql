@@ -16,7 +16,7 @@ CREATE TABLE products (
     INDEX idx_products_created_by ( `created_by` ) ,
     INDEX idx_products_updated_by ( `updated_by` ) ,
     INDEX idx_products_product_category_id ( `product_category_id` ) ,
-    CONSTRAINT FK_product_product_category_id FOREIGN KEY (`product_category_id`) REFERENCES product_category(`id`)  ON DELETE SET NULL,
+    CONSTRAINT FK_product_product_category_id FOREIGN KEY (`product_category_id`) REFERENCES product_categories(`id`)  ON DELETE SET NULL,
     CONSTRAINT FK_product_created_by FOREIGN KEY (`created_by`) REFERENCES admins(`id`)  ON DELETE SET NULL,
     CONSTRAINT FK_product_updated_by FOREIGN KEY (`updated_by`) REFERENCES admins(`id`)  ON DELETE SET NULL
 ) ENGINE = INNODB AUTO_INCREMENT = 1 DEFAULT CHARSET = utf8;
