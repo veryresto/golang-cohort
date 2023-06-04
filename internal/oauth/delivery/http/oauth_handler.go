@@ -38,12 +38,20 @@ func (handler *OauthHandler) Login(ctx *gin.Context) {
 	data, err := handler.usecase.Login(input)
 
 	if err != nil {
-		ctx.JSON(int(err.Code), response.Response(int(err.Code), http.StatusText(int(err.Code)), err.Err.Error()))
+		ctx.JSON(int(err.Code),
+			response.Response(int(err.Code),
+				http.StatusText(int(err.Code)),
+				err.Err.Error(),
+			))
 		ctx.Abort()
 		return
 	}
 
-	ctx.JSON(http.StatusOK, response.Response(http.StatusOK, http.StatusText(http.StatusOK), data))
+	ctx.JSON(http.StatusOK, response.Response(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		data,
+	))
 }
 
 func (handler *OauthHandler) Refresh(ctx *gin.Context) {

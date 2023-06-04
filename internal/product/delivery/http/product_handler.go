@@ -57,7 +57,7 @@ func (handler *ProductHandler) FindById(ctx *gin.Context) {
 		ctx.JSON(int(err.Code), response.Response(
 			int(err.Code),
 			http.StatusText(int(err.Code)),
-			err.Err,
+			err.Err.Error(),
 		))
 		ctx.Abort()
 		return
@@ -94,7 +94,7 @@ func (handler *ProductHandler) Create(ctx *gin.Context) {
 		ctx.JSON(int(err.Code), response.Response(
 			int(err.Code),
 			http.StatusText(int(err.Code)),
-			err.Err,
+			err.Err.Error(),
 		))
 		ctx.Abort()
 		return
@@ -132,7 +132,7 @@ func (handler *ProductHandler) Update(ctx *gin.Context) {
 		ctx.JSON(int(err.Code), response.Response(
 			int(err.Code),
 			http.StatusText(int(err.Code)),
-			err.Err,
+			err.Err.Error(),
 		))
 		ctx.Abort()
 		return
@@ -154,7 +154,7 @@ func (handler *ProductHandler) Delete(ctx *gin.Context) {
 		ctx.JSON(int(err.Code), response.Response(
 			int(err.Code),
 			http.StatusText(int(err.Code)),
-			err.Err,
+			err.Err.Error(),
 		))
 		ctx.Abort()
 		return

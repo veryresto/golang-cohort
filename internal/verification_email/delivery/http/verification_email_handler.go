@@ -29,7 +29,11 @@ func (handler *VerificationEmailHandler) VerificationEmail(ctx *gin.Context) {
 	var input dto.VerificationEmailRequestBody
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, response.Response(http.StatusBadRequest, http.StatusText(http.StatusBadRequest), err.Error()))
+		ctx.JSON(http.StatusBadRequest, response.Response(
+			http.StatusBadRequest,
+			http.StatusText(http.StatusBadRequest),
+			err.Error(),
+		))
 		ctx.Abort()
 		return
 	}
@@ -37,10 +41,18 @@ func (handler *VerificationEmailHandler) VerificationEmail(ctx *gin.Context) {
 	err := handler.usecase.VerificationCode(input)
 
 	if err != nil {
-		ctx.JSON(int(err.Code), response.Response(int(err.Code), http.StatusText(int(err.Code)), err))
+		ctx.JSON(int(err.Code), response.Response(
+			int(err.Code),
+			http.StatusText(int(err.Code)),
+			err.Err.Error(),
+		))
 		ctx.Abort()
 		return
 	}
 
-	ctx.JSON(http.StatusOK, response.Response(http.StatusOK, http.StatusText(http.StatusOK), "OK"))
+	ctx.JSON(http.StatusOK, response.Response(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		http.StatusText(http.StatusOK),
+	))
 }

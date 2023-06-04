@@ -115,8 +115,26 @@ func (usecase *discountUsecase) Update(id int, dto dto.DiscountRequestBody) (*en
 }
 
 // UpdateRemainingQuantity implements DiscountUsecase
-func (*discountUsecase) UpdateRemainingQuantity(id int, quantity int, operator string) (*entity.Discount, *response.Error) {
-	panic("unimplemented")
+func (usecase *discountUsecase) UpdateRemainingQuantity(id int, quantity int, operator string) (*entity.Discount, *response.Error) {
+	discount, err := usecase.repository.FindOneById(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if operator == "+" {
+		discount.RemainingQuantity = discount.RemainingQuantity + int64(quantity)
+	} else {
+		discount.RemainingQuantity = discount.RemainingQuantity - int64(quantity)
+	}
+
+	updateDiscount, err := usecase.repository.Update(*discount)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return updateDiscount, nil
 }
 
 func NewDiscountUseCase(repository repository.DiscountRepository) DiscountUsecase {

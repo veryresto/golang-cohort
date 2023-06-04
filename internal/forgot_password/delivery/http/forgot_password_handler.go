@@ -29,7 +29,11 @@ func (handler *ForgotPasswordHandler) Create(ctx *gin.Context) {
 	var input dto.ForgotPasswordRequestBody
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, response.Response(http.StatusBadRequest, http.StatusText(http.StatusBadRequest), err.Error()))
+		ctx.JSON(http.StatusBadRequest, response.Response(
+			http.StatusBadRequest,
+			http.StatusText(http.StatusBadRequest),
+			err.Error(),
+		))
 		ctx.Abort()
 		return
 	}
@@ -37,7 +41,11 @@ func (handler *ForgotPasswordHandler) Create(ctx *gin.Context) {
 	_, err := handler.usecase.Create(input)
 
 	if err != nil {
-		ctx.JSON(int(err.Code), response.Response(int(err.Code), http.StatusText(int(err.Code)), err))
+		ctx.JSON(int(err.Code), response.Response(
+			int(err.Code),
+			http.StatusText(int(err.Code)),
+			err.Err.Error(),
+		))
 		ctx.Abort()
 		return
 	}
@@ -49,7 +57,11 @@ func (handler *ForgotPasswordHandler) Update(ctx *gin.Context) {
 	var input dto.ForgotPasswordUpdateRequestBody
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
-		ctx.JSON(http.StatusBadRequest, response.Response(http.StatusBadRequest, http.StatusText(http.StatusBadRequest), err.Error()))
+		ctx.JSON(http.StatusBadRequest, response.Response(
+			http.StatusBadRequest,
+			http.StatusText(http.StatusBadRequest),
+			err.Error(),
+		))
 		ctx.Abort()
 		return
 	}
@@ -57,10 +69,18 @@ func (handler *ForgotPasswordHandler) Update(ctx *gin.Context) {
 	_, err := handler.usecase.Update(input)
 
 	if err != nil {
-		ctx.JSON(int(err.Code), response.Response(int(err.Code), http.StatusText(int(err.Code)), err))
+		ctx.JSON(int(err.Code),
+			response.Response(int(err.Code),
+				http.StatusText(int(err.Code)),
+				err.Err.Error(),
+			))
 		ctx.Abort()
 		return
 	}
 
-	ctx.JSON(http.StatusOK, response.Response(http.StatusOK, http.StatusText(http.StatusOK), "Success change your password."))
+	ctx.JSON(http.StatusOK, response.Response(
+		http.StatusOK,
+		http.StatusText(http.StatusOK),
+		"Success change your password.",
+	))
 }

@@ -56,7 +56,7 @@ func (handler *ProductCategoryHandler) FindById(ctx *gin.Context) {
 		ctx.JSON(int(err.Code), response.Response(
 			int(err.Code),
 			http.StatusText(int(err.Code)),
-			err,
+			err.Err.Error(),
 		))
 		ctx.Abort()
 		return
@@ -77,7 +77,7 @@ func (handler *ProductCategoryHandler) Create(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, response.Response(
 			http.StatusBadRequest,
 			http.StatusText(http.StatusBadRequest),
-			err,
+			err.Error(),
 		))
 		ctx.Abort()
 		return
@@ -93,7 +93,7 @@ func (handler *ProductCategoryHandler) Create(ctx *gin.Context) {
 		ctx.JSON(int(err.Code), response.Response(
 			int(err.Code),
 			http.StatusText(int(err.Code)),
-			err,
+			err.Err.Error(),
 		))
 		ctx.Abort()
 		return
@@ -115,7 +115,7 @@ func (handler *ProductCategoryHandler) Update(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, response.Response(
 			http.StatusBadRequest,
 			http.StatusText(http.StatusBadRequest),
-			err,
+			err.Error(),
 		))
 		ctx.Abort()
 		return
@@ -131,7 +131,7 @@ func (handler *ProductCategoryHandler) Update(ctx *gin.Context) {
 		ctx.JSON(int(err.Code), response.Response(
 			int(err.Code),
 			http.StatusText(int(err.Code)),
-			err,
+			err.Err.Error(),
 		))
 		ctx.Abort()
 		return
@@ -153,7 +153,7 @@ func (handler *ProductCategoryHandler) Delete(ctx *gin.Context) {
 		ctx.JSON(int(err.Code), response.Response(
 			int(err.Code),
 			http.StatusText(int(err.Code)),
-			err,
+			err.Err.Error(),
 		))
 		ctx.Abort()
 		return

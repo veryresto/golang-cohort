@@ -35,6 +35,7 @@ require (
 	github.com/sendgrid/sendgrid-go v3.12.0+incompatible // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
+	github.com/xendit/xendit-go v1.0.20 // indirect
 	golang.org/x/arch v0.3.0 // indirect
 	golang.org/x/crypto v0.9.0 // indirect
 	golang.org/x/mod v0.8.0 // indirect
