@@ -58,6 +58,11 @@ INSERT INTO golang.oauth_clients
 (client_id, client_secret, name, redirect, description, `scope`, created_by, updated_by, created_at, updated_at, deleted_at)
 VALUES('1', '1', 'web', '', '', '', null, null, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, null);
 
+# insert to admins
+INSERT INTO golang.admins
+(name, email, password, created_by, updated_by, created_at, updated_at, deleted_at)
+VALUES('feryadmin', 'feryadmin@mailinator.com', '$2a$10$HLyBrXZfk09FWjfjNV4XoONF/P5TNdwFc.w0UkMGisNn1ArS/QPFi', null, null, CURRENT_TIMESTAMP, null, null);
+
 
 # sendgrid go
 https://github.com/sendgrid/sendgrid-go#install-package
@@ -77,3 +82,19 @@ https://github.com/sirupsen/logrus
 
 # cloudinary go integration docs
 https://cloudinary.com/documentation/go_integration
+
+# pertemuan 7
+
+## create module cart 
+subfolders: 
+- entity
+    - struct Cart
+- repository
+    - CartRepository interface: kontrak kosong
+    - struct cartRepository
+- usecase, dto, injector, delivery
+
+## xendit 
+go get -u github.com/xendit/xendit-go
+
+## create module payment
