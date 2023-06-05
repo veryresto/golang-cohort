@@ -98,3 +98,7 @@ subfolders:
 go get -u github.com/xendit/xendit-go
 
 ## create module payment
+
+# xendit get invoice status
+https://developers.xendit.co/api-reference/#get-invoice
+response parameters -> status
