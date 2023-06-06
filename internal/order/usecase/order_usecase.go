@@ -250,8 +250,22 @@ func (usecase *orderUsecase) FindOneById(id int, userId int) (*entity.Order, *re
 }
 
 // Update implements OrderUsecase
-func (*orderUsecase) Update(id int, dto dto.OrderRequestBody) (*entity.Order, *response.Error) {
-	panic("unimplemented")
+func (usecase *orderUsecase) Update(id int, dto dto.OrderRequestBody) (*entity.Order, *response.Error) {
+	order, err := usecase.repository.FindOneById(id)
+
+	if err != nil {
+		return nil, err
+	}
+
+	order.Status = dto.Status
+
+	updateOrder, err := usecase.repository.Update(*order)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return updateOrder, nil
 }
 
 func NewOrderUseCase(

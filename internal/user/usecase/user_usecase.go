@@ -14,15 +14,39 @@ import (
 )
 
 type UserUsecase interface {
+	FindAll(offset int, limit int) []entity.User
 	FindByEmail(email string) (*entity.User, *response.Error)
 	FindOneById(id int) (*entity.User, *response.Error)
 	Create(dto dto.UserRequestBody) (*entity.User, *response.Error)
 	FindOneByCodeVerified(codeVerified string) (*entity.User, *response.Error)
 	Update(id int, dto dto.UserUpdateRequestBody) (*entity.User, *response.Error)
+	Delete(id int) *response.Error
 }
 
 type userUsecase struct {
 	repository repository.UserRepository
+}
+
+// FindAll implements UserUsecase
+func (usecase *userUsecase) FindAll(offset int, limit int) []entity.User {
+	return usecase.repository.FindAll(offset, limit)
+}
+
+// Delete implements UserUsecase
+func (usecase *userUsecase) Delete(id int) *response.Error {
+	user, err := usecase.repository.FindOneById(id)
+
+	if err != nil {
+		return err
+	}
+
+	err = usecase.repository.Delete(*user)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }
 
 // FindOneById implements UserUsecase
@@ -33,6 +57,12 @@ func (usecase *userUsecase) FindOneById(id int) (*entity.User, *response.Error) 
 // Update implements UserUsecase
 func (usecase *userUsecase) Update(id int, dto dto.UserUpdateRequestBody) (*entity.User, *response.Error) {
 	user, err := usecase.repository.FindOneById(id)
+
+	user.Name = dto.Name
+
+	if user.Email != dto.Email {
+		user.Email = dto.Email
+	}
 
 	if err != nil {
 		return nil, err
@@ -53,6 +83,10 @@ func (usecase *userUsecase) Update(id int, dto dto.UserUpdateRequestBody) (*enti
 		}
 
 		user.Password = string(hashedPassword)
+	}
+
+	if dto.UpdatedBy != nil {
+		user.UpdatedByID = dto.UpdatedBy
 	}
 
 	updateUser, err := usecase.repository.Update(*user)
@@ -99,6 +133,10 @@ func (usecase *userUsecase) Create(dto dto.UserRequestBody) (*entity.User, *resp
 		Email:        dto.Email,
 		Password:     string(hashedPassword),
 		CodeVerified: utils.RandString(32),
+	}
+
+	if dto.CreatedBy != nil {
+		user.CreatedByID = dto.CreatedBy
 	}
 
 	dataUser, err := usecase.repository.Create(user)

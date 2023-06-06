@@ -3,20 +3,44 @@ package user
 import (
 	entity "online-course/internal/user/entity"
 	response "online-course/pkg/response"
+	"online-course/pkg/utils"
 
 	"gorm.io/gorm"
 )
 
 type UserRepository interface {
+	FindAll(offset int, limit int) []entity.User
 	FindOneById(id int) (*entity.User, *response.Error)
 	FindByEmail(email string) (*entity.User, *response.Error)
 	Create(entity entity.User) (*entity.User, *response.Error)
 	FindOneByCodeVerified(codeVerified string) (*entity.User, *response.Error)
 	Update(entity entity.User) (*entity.User, *response.Error)
+	Delete(entity entity.User) *response.Error
 }
 
 type userRepository struct {
 	db *gorm.DB
+}
+
+// FindAll implements UserRepository
+func (repository *userRepository) FindAll(offset int, limit int) []entity.User {
+	var users []entity.User
+
+	repository.db.Scopes(utils.Paginate(offset, limit)).Find(&users)
+
+	return users
+}
+
+// Delete implements UserRepository
+func (repository *userRepository) Delete(entity entity.User) *response.Error {
+	if err := repository.db.Delete(&entity).Error; err != nil {
+		return &response.Error{
+			Code: 500,
+			Err:  err,
+		}
+	}
+
+	return nil
 }
 
 // FindOneById implements UserRepository

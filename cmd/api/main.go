@@ -3,18 +3,21 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 
-	mysql "online-course.faerul.com/pkg/db/mysql"
+	mysql "online-course/pkg/db/mysql"
 
-	admin "online-course.faerul.com/internal/admin/injector"
-	cart "online-course.faerul.com/internal/cart/injector"
-	discount "online-course.faerul.com/internal/discount/injector"
-	forgotPassword "online-course.faerul.com/internal/forgot_password/injector"
-	oauth "online-course.faerul.com/internal/oauth/injector"
-	order "online-course.faerul.com/internal/order/injector"
-	product "online-course.faerul.com/internal/product/injector"
-	productCategory "online-course.faerul.com/internal/product_category/injector"
-	register "online-course.faerul.com/internal/register/injector"
-	verificationEmail "online-course.faerul.com/internal/verification_email/injector"
+	admin "online-course/internal/admin/injector"
+	cart "online-course/internal/cart/injector"
+	classRoom "online-course/internal/class_room/injector"
+	discount "online-course/internal/discount/injector"
+	forgotPassword "online-course/internal/forgot_password/injector"
+	oauth "online-course/internal/oauth/injector"
+	order "online-course/internal/order/injector"
+	product "online-course/internal/product/injector"
+	productCategory "online-course/internal/product_category/injector"
+	register "online-course/internal/register/injector"
+	user "online-course/internal/user/injector"
+	verificationEmail "online-course/internal/verification_email/injector"
+	webhook "online-course/internal/webhook/injector"
 )
 
 func main() {
@@ -32,6 +35,9 @@ func main() {
 	discount.InitializedService(db).Route(&r.RouterGroup)
 	cart.InitializedService(db).Route(&r.RouterGroup)
 	order.InitializedService(db).Route(&r.RouterGroup)
+	classRoom.InitializedService(db).Route(&r.RouterGroup)
+	webhook.InitializedService(db).Route(&r.RouterGroup)
+	user.InitializedService(db).Route(&r.RouterGroup)
 
 	r.Run()
 }
