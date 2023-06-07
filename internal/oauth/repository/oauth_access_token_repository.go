@@ -10,10 +10,26 @@ import (
 type OauthAccessTokenRepository interface {
 	Create(entity entity.OauthAccessToken) (*entity.OauthAccessToken, *response.Error)
 	Delete(entity.OauthAccessToken) *response.Error
+	FindOneByAccessToken(accessToken string) (*entity.OauthAccessToken, *response.Error)
 }
 
 type oauthAccessTokenRepository struct {
 	db *gorm.DB
+}
+
+// FindOneByAccessToken implements OauthAccessTokenRepository
+func (repository *oauthAccessTokenRepository) FindOneByAccessToken(accessToken string) (*entity.OauthAccessToken, *response.Error) {
+	var oauthAccessToken entity.OauthAccessToken
+
+	if err := repository.db.Where("token = ?", accessToken).
+		First(&oauthAccessToken).Error; err != nil {
+		return nil, &response.Error{
+			Code: 500,
+			Err:  err,
+		}
+	}
+
+	return &oauthAccessToken, nil
 }
 
 // Create implements OauthAccessTokenRepository

@@ -16,10 +16,22 @@ type UserRepository interface {
 	FindOneByCodeVerified(codeVerified string) (*entity.User, *response.Error)
 	Update(entity entity.User) (*entity.User, *response.Error)
 	Delete(entity entity.User) *response.Error
+	TotalCountUser() int64
 }
 
 type userRepository struct {
 	db *gorm.DB
+}
+
+// CountTotalUser implements UserRepository
+func (repository *userRepository) TotalCountUser() int64 {
+	var user entity.User
+
+	var totalUser int64
+
+	repository.db.Model(&user).Count(&totalUser)
+
+	return totalUser
 }
 
 // FindAll implements UserRepository

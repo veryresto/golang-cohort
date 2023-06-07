@@ -16,10 +16,16 @@ type AdminUsecase interface {
 	Create(dto dto.AdminRequestBody) (*entity.Admin, *response.Error)
 	Update(id int, dto dto.AdminRequestBody) (*entity.Admin, *response.Error)
 	Delete(id int) *response.Error
+	TotalCountAdmin() int64
 }
 
 type adminUsecase struct {
 	repository repository.AdminRepository
+}
+
+// CountTotalAdmin implements AdminUsecase
+func (usecase *adminUsecase) TotalCountAdmin() int64 {
+	return usecase.repository.TotalCountAdmin()
 }
 
 // Create implements AdminUsecase

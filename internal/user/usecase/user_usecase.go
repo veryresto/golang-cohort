@@ -21,10 +21,16 @@ type UserUsecase interface {
 	FindOneByCodeVerified(codeVerified string) (*entity.User, *response.Error)
 	Update(id int, dto dto.UserUpdateRequestBody) (*entity.User, *response.Error)
 	Delete(id int) *response.Error
+	TotalCountUser() int64
 }
 
 type userUsecase struct {
 	repository repository.UserRepository
+}
+
+// CountTotalUser implements UserUsecase
+func (usecase *userUsecase) TotalCountUser() int64 {
+	return usecase.repository.TotalCountUser()
 }
 
 // FindAll implements UserUsecase

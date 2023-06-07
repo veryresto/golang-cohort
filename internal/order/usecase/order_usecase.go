@@ -28,6 +28,7 @@ type OrderUsecase interface {
 	FindOneByExternalId(externalId string) (*entity.Order, *response.Error)
 	Create(dto dto.OrderRequestBody) (*entity.Order, *response.Error)
 	Update(id int, dto dto.OrderRequestBody) (*entity.Order, *response.Error)
+	TotalCountOrder() int64
 }
 
 type orderUsecase struct {
@@ -37,6 +38,11 @@ type orderUsecase struct {
 	productUsecase     productUsecase.ProductUsecase
 	orderDetailUsecase orderDetailUsecase.OrderDetailUsecase
 	paymentUsecase     paymentUsecase.PaymentUsecase
+}
+
+// TotalCountOrder implements OrderUsecase
+func (usecase *orderUsecase) TotalCountOrder() int64 {
+	return usecase.repository.TotalCountOrder()
 }
 
 // Create implements OrderUsecase

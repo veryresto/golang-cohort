@@ -20,6 +20,7 @@ import (
 type OauthUsecase interface {
 	Login(dtoLoginRequestBody dto.LoginRequestBody) (*dto.LoginResponse, *response.Error)
 	Refresh(dto dto.RefreshTokenRequestBody) (*dto.LoginResponse, *response.Error)
+	Logout(accessToken string) *response.Error
 }
 
 type oauthUsecase struct {
@@ -28,6 +29,29 @@ type oauthUsecase struct {
 	oauthRefreshTokenRepository repository.OauthRefreshTokenRepository
 	userUsecase                 userUsecase.UserUsecase
 	adminUsecase                adminUsecase.AdminUsecase
+}
+
+// Logout implements OauthUsecase
+func (usecase *oauthUsecase) Logout(accessToken string) *response.Error {
+	// Cari data di table oauth access token berdasarkan access token
+	oauthAccessToken, err := usecase.oauthAcessTokenRepository.FindOneByAccessToken(accessToken)
+
+	if err != nil {
+		return err
+	}
+
+	// Cari data di table oauth refresh token berdasarkan oauth access token id
+	oauthRefreshToken, err := usecase.oauthRefreshTokenRepository.FindOneByOauthAccessTokenId(int(oauthAccessToken.ID))
+
+	if err != nil {
+		return err
+	}
+
+	// Delete data
+	usecase.oauthAcessTokenRepository.Delete(*oauthAccessToken)
+	usecase.oauthRefreshTokenRepository.Delete(*oauthRefreshToken)
+
+	return nil
 }
 
 // Login implements OauthUsecase

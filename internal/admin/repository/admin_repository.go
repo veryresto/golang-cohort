@@ -15,10 +15,22 @@ type AdminRepository interface {
 	Create(entity entity.Admin) (*entity.Admin, *response.Error)
 	Update(entity entity.Admin) (*entity.Admin, *response.Error)
 	Delete(entity entity.Admin) *response.Error
+	TotalCountAdmin() int64
 }
 
 type adminRepository struct {
 	db *gorm.DB
+}
+
+// TotalCountAdmin implements AdminRepository
+func (repository *adminRepository) TotalCountAdmin() int64 {
+	var admin entity.Admin
+
+	var totalAdmin int64
+
+	repository.db.Model(&admin).Count(&totalAdmin)
+
+	return totalAdmin
 }
 
 // Create implements AdminRepository

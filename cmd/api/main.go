@@ -8,12 +8,14 @@ import (
 	admin "online-course/internal/admin/injector"
 	cart "online-course/internal/cart/injector"
 	classRoom "online-course/internal/class_room/injector"
+	dashboard "online-course/internal/dashboard/injector"
 	discount "online-course/internal/discount/injector"
 	forgotPassword "online-course/internal/forgot_password/injector"
 	oauth "online-course/internal/oauth/injector"
 	order "online-course/internal/order/injector"
 	product "online-course/internal/product/injector"
 	productCategory "online-course/internal/product_category/injector"
+	profile "online-course/internal/profile/injector"
 	register "online-course/internal/register/injector"
 	user "online-course/internal/user/injector"
 	verificationEmail "online-course/internal/verification_email/injector"
@@ -38,6 +40,8 @@ func main() {
 	classRoom.InitializedService(db).Route(&r.RouterGroup)
 	webhook.InitializedService(db).Route(&r.RouterGroup)
 	user.InitializedService(db).Route(&r.RouterGroup)
+	profile.InitializedService(db).Route(&r.RouterGroup)
+	dashboard.InitializedService(db).Route(&r.RouterGroup)
 
 	r.Run()
 }

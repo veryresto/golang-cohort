@@ -14,10 +14,22 @@ type ProductRepository interface {
 	Create(entity entity.Product) (*entity.Product, *response.Error)
 	Update(entity entity.Product) (*entity.Product, *response.Error)
 	Delete(entity entity.Product) *response.Error
+	TotalCountProduct() int64
 }
 
 type productRepository struct {
 	db *gorm.DB
+}
+
+// TotalCountProduct implements ProductRepository
+func (repository *productRepository) TotalCountProduct() int64 {
+	var product entity.Product
+
+	var totalProduct int64
+
+	repository.db.Model(&product).Count(&totalProduct)
+
+	return totalProduct
 }
 
 // Create implements ProductRepository

@@ -14,11 +14,17 @@ type ProductUsecase interface {
 	Create(dto dto.ProductRequestBody) (*entity.Product, *response.Error)
 	Update(id int, dto dto.ProductRequestBody) (*entity.Product, *response.Error)
 	Delete(id int) (*entity.Product, *response.Error)
+	TotalCountProduct() int64
 }
 
 type productUsecase struct {
 	repositoy repository.ProductRepository
 	media     media.Media
+}
+
+// TotalCountProduct implements ProductUsecase
+func (usecase *productUsecase) TotalCountProduct() int64 {
+	return usecase.repositoy.TotalCountProduct()
 }
 
 // Create implements ProductUsecase

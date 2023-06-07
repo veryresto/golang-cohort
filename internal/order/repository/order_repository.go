@@ -14,10 +14,22 @@ type OrderRepository interface {
 	FindOneById(id int) (*entity.Order, *response.Error)
 	Create(entity entity.Order) (*entity.Order, *response.Error)
 	Update(entity entity.Order) (*entity.Order, *response.Error)
+	TotalCountOrder() int64
 }
 
 type orderRepository struct {
 	db *gorm.DB
+}
+
+// TotalCountOrder implements OrderRepository
+func (repository *orderRepository) TotalCountOrder() int64 {
+	var order entity.Order
+
+	var totalOrder int64
+
+	repository.db.Model(&order).Count(&totalOrder)
+
+	return totalOrder
 }
 
 // Create implements OrderRepository
