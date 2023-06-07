@@ -102,3 +102,8 @@ go get -u github.com/xendit/xendit-go
 # xendit get invoice status
 https://developers.xendit.co/api-reference/#get-invoice
 response parameters -> status
+
+# insert discount
+INSERT INTO golang.discounts
+(name, code, quantity, remaining_quantity, `type`, value, start_date, end_date, created_by, updated_by, created_at, updated_at, deleted_at)
+VALUES('Diskon 2023 Upd', 'DSC-2023-UPDATE', 150, 150, 'rebate', 10, NULL, NULL, 2, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
