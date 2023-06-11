@@ -36,6 +36,7 @@ migrate create -ext sql -dir database/migrations create_admins_table
 
 # connect mysql
 migrate -database "mysql://root:admin123@tcp(localhost:3306)/golang" -path database/migrations up
+migrate -database "mysql://root:g0l4ng!@tcp(143.198.192.28:3306)/golang" -path database/migrations up
 
 
 # gorm
@@ -106,4 +107,4 @@ response parameters -> status
 # insert discount
 INSERT INTO golang.discounts
 (name, code, quantity, remaining_quantity, `type`, value, start_date, end_date, created_by, updated_by, created_at, updated_at, deleted_at)
-VALUES('Diskon 2023 Upd', 'DSC-2023-UPDATE', 150, 150, 'rebate', 10, NULL, NULL, 2, NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
+VALUES('Diskon 2023 Upd', 'DSC-2023-UPDATE', 150, 150, 'rebate', 10, NULL, NULL, , NULL, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, NULL);
