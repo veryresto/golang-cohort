@@ -24,6 +24,7 @@ import (
 
 func main() {
 	r := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
 
 	db := mysql.DB()
 

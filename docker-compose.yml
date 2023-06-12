@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  api:
+    build: ./
+    container_name: api
+    restart: always
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+      
+  mysql-online-course:
+    image: mysql:8.0
+    container_name: mysql-online-course
+    expose:
+      - 3306
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: api
+      MYSQL_USER: golang
+      MYSQL_PASSWORD: api
+    volumes:
+      - online-course-db:/var/lib/mysql
+
+volumes:
+  online-course-db:
